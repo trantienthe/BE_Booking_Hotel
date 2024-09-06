@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "be-hotel"
+version = "0.1.0"
+description = ""
+authors = ["TranTienThe <tranthe2k2ak@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1.1"
+psycopg2-binary = "^2.9.9"
+pillow = "^10.4.0"
+drf-yasg = "^1.21.7"
+setuptools = "^74.1.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
