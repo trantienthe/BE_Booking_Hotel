@@ -4,11 +4,12 @@ from rest_framework.routers import DefaultRouter
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from e_be_booking_hotel.views import HotelViewSet
+from e_be_booking_hotel.views import HotelViewSet, UserViewSet
 
 # Tạo router và đăng ký viewsets
 router = DefaultRouter()
 router.register(r'hotels', HotelViewSet)
+router.register(r'user', UserViewSet)
 
 # Tạo schema view cho Swagger
 schema_view = get_schema_view(
