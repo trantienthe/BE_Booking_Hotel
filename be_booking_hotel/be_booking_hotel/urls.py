@@ -3,19 +3,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-
-from e_be_booking_hotel.views import HotelViewSet, UserViewSet, UtilitiesViewSet, AreaViewSet
-
-# Tạo router và đăng ký viewsets
-router = DefaultRouter()
-router.register(r'hotels', HotelViewSet)
-router.register(r'user', UserViewSet)
-router.register(r'utilities', UtilitiesViewSet)
-
-router.register(r'area', AreaViewSet)
 
 # Tạo schema view cho Swagger
 schema_view = get_schema_view(
@@ -33,6 +22,6 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', lambda request: HttpResponseRedirect('/admin/')),
-    path('', include(router.urls)),  # Đưa các URL của ứng dụng vào dự án
+    path('', include('e_be_booking_hotel.urls')),  # Đưa các URL của ứng dụng vào dự án
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

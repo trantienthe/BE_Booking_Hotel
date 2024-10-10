@@ -32,6 +32,10 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = "e_be_booking_hotel.User"
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+]
+
 INSTALLED_APPS = [
     'jazzmin',
     'django.contrib.admin',
@@ -42,9 +46,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'e_be_booking_hotel.apps.EBeBookingHotelConfig',
     'drf_yasg',
+    'corsheaders',
+    'rest_framework',
+    'rest_framework_simplejwt',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -137,3 +151,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': 'JWT authorization uses the Bearer scheme. For example: "Authorization: Bearer {access_token}"'
+        }
+    }
+}
