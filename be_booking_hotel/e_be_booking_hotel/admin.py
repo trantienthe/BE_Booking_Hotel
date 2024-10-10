@@ -4,6 +4,20 @@ from django.utils.html import format_html
 from .models import Hotel, Utilities, RoomUtilities, Area, RoomImages
 from .models import User
 from .models import Room
+from .models import Slider
+
+class SliderAdmin(admin.ModelAdmin):
+    # Hiển thị các trường này trong danh sách
+    list_display = ('slider_id', 'image_url','video_url', 'title', 'order', 'room')
+
+    # Cho phép tìm kiếm theo các trường này
+    search_fields = ('title', 'room__room_type')
+
+    # Các trường hiển thị trong form thêm/sửa slider
+    fields = ('image_url','video_url',  'title', 'description', 'room', 'order')
+
+    # Tùy chỉnh sắp xếp mặc định (optional)
+    ordering = ('order',)
 
 class AreaAdmin(admin.ModelAdmin):
     list_display = ('name', 'hotel')
@@ -80,4 +94,5 @@ admin.site.register(Hotel, HotelAdmin)
 admin.site.register(Utilities, UtilitiesAdmin)
 # admin.site.register(RoomUtilities, RoomUtilitiesAdmin)
 admin.site.register(Area, AreaAdmin)
+admin.site.register(Slider, SliderAdmin)
 
