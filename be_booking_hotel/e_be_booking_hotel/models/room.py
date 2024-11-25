@@ -1,7 +1,5 @@
 from django.db import models
-
 from .area import Area
-
 
 class Room(models.Model):
     ROOM_STATUS_CHOICES = [
@@ -16,7 +14,7 @@ class Room(models.Model):
     max_occupancy = models.IntegerField()  # Số lượng người tối đa
     description = models.TextField()  # Mô tả phòng
     thumbnail = models.ImageField(upload_to='uploads/%Y/%m/%d/')
-    status = models.CharField(max_length=50, choices=ROOM_STATUS_CHOICES, null=True, blank=True)  # Trạng thái phòng
+    status = models.CharField(max_length=50, choices=ROOM_STATUS_CHOICES, default='available', blank=True)  # Trạng thái phòng mặc định là 'available'
 
     def get_images(self):
         return self.images.all()

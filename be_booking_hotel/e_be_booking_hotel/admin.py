@@ -1,22 +1,76 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import Hotel, Utilities, RoomUtilities, Area, RoomImages
+from .models import Hotel, Utilities, RoomUtilities, Area, RoomImages, Cart, Order, OrderDetail, Review, Voucher
 from .models import User
 from .models import Room
 from .models import Slider
 
+class VoucherAdmin(admin.ModelAdmin):
+    list_display = ('voucher_id', 'code', 'discount_percentage', 'start_date', 'end_date', 'is_active', 'usage_count')
+    list_filter = ('is_active', 'start_date', 'end_date')
+    search_fields = ('code',)
+    ordering = ('-start_date',)
+
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('review_id', 'hotel_id', 'user_id', 'rating', 'comment', 'review_date', 'img_display')
+    list_filter = ('hotel_id', 'user_id')
+    search_fields = ('hotel_id','user_id')
+    fields = ( 'hotel_id', 'user_id', 'rating', 'comment', 'review_date')
+
+    def img_display(self, obj):
+        if obj.img:
+            return format_html('<img src="{}" width="50" height="50" />', obj.img)
+        return "No Image"
+    img_display.short_description = 'Image'
+
+class OrderDetailAdmin(admin.ModelAdmin):
+    list_display = ('order', 'room', 'price', 'checkin_date', 'checkout_date')
+    list_filter = ('order', 'room')
+    search_fields = ('order__id', 'room__room_type')
+    fields = ('order', 'room', 'price', 'checkin_date', 'checkout_date')
+    readonly_fields = ('order', 'room', 'price', 'checkin_date', 'checkout_date')
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'full_name', 'email', 'phone_number', 'voucher', 'payment_method', 'total_price', 'order_date', 'status', 'user_id')  # Các trường hiển thị trong danh sách
+    list_filter = ('status', 'user')  # Bộ lọc để cho phép phân loại theo trạng thái, người dùng và phòng
+    search_fields = ('user__username', 'status')  # Bật tính năng tìm kiếm theo tên người dùng và loại phòng
+    readonly_fields = ('order_date', 'total_price')  # Các trường không nên được chỉnh sửa
+
+    def has_add_permission(self, request):
+        return True  # Cho phép thêm đơn hàng từ admin
+
+    def has_delete_permission(self, request, obj=None):
+        return True  # Cho phép xóa đơn hàng từ admin
+
+    def has_change_permission(self, request, obj=None):
+        return True  # Cho phép thay đổi đơn hàng từ admin
+
+
+
+class CartAdmin(admin.ModelAdmin):
+    list_display = ('user', 'room', 'checkin_date', 'checkout_date', 'total_days', 'total_price')  # Các trường hiển thị trong danh sách
+    list_filter = ('user', 'room')  # Bộ lọc theo người dùng và phòng
+    readonly_fields = ('user','total_price', 'checkin_date', 'checkout_date', 'room', 'total_days')
+
+    def has_add_permission(self, request):
+        return False  # Không cho phép thêm giỏ hàng từ admin
+
+    def total_days(self, obj):
+        if obj.checkin_date and obj.checkout_date:
+            return (obj.checkout_date - obj.checkin_date).days
+        return 0  # Trả về 0 nếu không có thông tin ngày
+
+    total_days.short_description = 'Tổng số ngày'
+
+    def has_delete_permission(self, request, obj=None):
+        return True  # Cho phép xóa giỏ hàng từ admin
+
+
 class SliderAdmin(admin.ModelAdmin):
-    # Hiển thị các trường này trong danh sách
     list_display = ('slider_id', 'image_url','video_url', 'title', 'order', 'room')
-
-    # Cho phép tìm kiếm theo các trường này
     search_fields = ('title', 'room__room_type')
-
-    # Các trường hiển thị trong form thêm/sửa slider
     fields = ('image_url','video_url',  'title', 'description', 'room', 'order')
-
-    # Tùy chỉnh sắp xếp mặc định (optional)
     ordering = ('order',)
 
 class AreaAdmin(admin.ModelAdmin):
@@ -95,4 +149,9 @@ admin.site.register(Utilities, UtilitiesAdmin)
 # admin.site.register(RoomUtilities, RoomUtilitiesAdmin)
 admin.site.register(Area, AreaAdmin)
 admin.site.register(Slider, SliderAdmin)
+admin.site.register(Cart, CartAdmin)
+admin.site.register(Order, OrderAdmin)
+admin.site.register(OrderDetail, OrderDetailAdmin)
+admin.site.register(Review, ReviewAdmin)
+admin.site.register(Voucher, VoucherAdmin)
 

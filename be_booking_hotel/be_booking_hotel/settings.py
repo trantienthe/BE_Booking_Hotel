@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-!ac&aws1x2r0#v5znl-ohq4i!*di@cz4d5qeyd*^)%-ad9&s_#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Application definition
@@ -49,13 +51,14 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
+    'vnpay'
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ),
+# }
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -152,13 +155,27 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'Bearer': {
-            'type': 'apiKey',
-            'name': 'Authorization',
-            'in': 'header',
-            'description': 'JWT authorization uses the Bearer scheme. For example: "Authorization: Bearer {access_token}"'
-        }
-    }
+# SWAGGER_SETTINGS = {
+#     'SECURITY_DEFINITIONS': {
+#         'Bearer': {
+#             'type': 'apiKey',
+#             'name': 'Authorization',
+#             'in': 'header',
+#             'description': 'JWT authorization uses the Bearer scheme. For example: "Authorization: Bearer {access_token}"'
+#         }
+#     }
+# }
+
+# VNPAY_TMN_CODE = 'WRQMN312'
+# VNPAY_HASH_SECRET_KEY = '6OLWVENQ3MNA0X5ONCY6DZXBB733RJQD'
+# VNPAY_PAYMENT_URL = 'https://sandbox.vnpayment.vn/merchant_webapi/api/transaction'
+# VNPAY_RETURN_URL = 'http://localhost:3000/thanh-to%C3%A1n'
+
+ZALOPAY_CONFIG = {
+    "APP_ID": 2553,
+    "KEY1": "PcY4iZIKFCIdgZvA6ueMcMHHUbRLYjPL",
+    "KEY2": "kLtgPl8HHhfvMuDHPwKfgfsY4Ydm9eIz",
+    "CREATE_ENDPOINT": "https://sb-openapi.zalopay.vn/v2/create",
+    "STATUS_ENDPOINT": "https://sb-openapi.zalopay.vn/v2/query",
 }
+
