@@ -50,6 +50,20 @@ asgiref = ">=3.6"
 django = ">=3.2"
 
 [[package]]
+name = "django-ipware"
+version = "7.0.1"
+description = "A Django application to retrieve user's IP address"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django-ipware-7.0.1.tar.gz", hash = "sha256:d9ec43d2bf7cdf216fed8d494a084deb5761a54860a53b2e74346a4f384cff47"},
+    {file = "django_ipware-7.0.1-py2.py3-none-any.whl", hash = "sha256:db16bbee920f661ae7f678e4270460c85850f03c6761a4eaeb489bdc91f64709"},
+]
+
+[package.dependencies]
+python-ipware = ">=2.0.3"
+
+[[package]]
 name = "django-jazzmin"
 version = "3.0.0"
 description = "Drop-in theme for django admin, that utilises AdminLTE 3 & Bootstrap 4 to make yo' admin look jazzy"
@@ -62,6 +76,25 @@ files = [
 
 [package.dependencies]
 django = ">=4.2"
+
+[[package]]
+name = "django-vnpay"
+version = "0.0.19"
+description = "A quick package for integrating Vnpay payment gateway."
+optional = false
+python-versions = ">=3.10"
+files = [
+    {file = "django-vnpay-0.0.19.tar.gz", hash = "sha256:9b36160c0b8ed3724b177cac49a9aff98eb2a37cb0acdc70d188ce2863d5b79a"},
+    {file = "django_vnpay-0.0.19-py3-none-any.whl", hash = "sha256:19f03eb2e36435c54ceb769fb3ee2b5b6852217a87225f166d1876011b4c2a56"},
+]
+
+[package.dependencies]
+django = ">=4.0.0"
+django-ipware = ">=4.0.0"
+djangorestframework = ">=3.12.4"
+
+[package.extras]
+dev = ["bumpver", "pip-tools", "poetry", "pytest"]
 
 [[package]]
 name = "djangorestframework"
@@ -343,6 +376,20 @@ docs = ["sphinx", "sphinx-rtd-theme", "zope.interface"]
 tests = ["coverage[toml] (==5.0.4)", "pytest (>=6.0.0,<7.0.0)"]
 
 [[package]]
+name = "python-ipware"
+version = "3.0.0"
+description = "A Python package to retrieve user's IP address"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "python_ipware-3.0.0-py3-none-any.whl", hash = "sha256:fc936e6e7ec9fcc107f9315df40658f468ac72f739482a707181742882e36b60"},
+    {file = "python_ipware-3.0.0.tar.gz", hash = "sha256:9117b1c4dddcb5d5ca49e6a9617de2fc66aec2ef35394563ac4eecabdf58c062"},
+]
+
+[package.extras]
+dev = ["coverage[toml]", "coveralls (>=3.3,<4.0)", "ruff", "twine"]
+
+[[package]]
 name = "pytz"
 version = "2024.1"
 description = "World timezone definitions, modern and historical"
@@ -475,4 +522,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "bd106c38264fd4f651955a728d43b4e3f66ba83dc474f81a915aa5316b33c252"
+content-hash = "f6a49cb77ef1da60bbaa687bbee06258a783dd88d5c7b3d7b46f5d6aba84eb9e"

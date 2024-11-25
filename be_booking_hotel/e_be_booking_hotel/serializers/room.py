@@ -38,8 +38,8 @@ class RoomSerializer(serializers.ModelSerializer):
             'description',
             'thumbnail',
             'status',
-            'area',  # Thêm khu vực
-            'hotel', # Thêm khách sạn
+            'area',
+            'hotel',
             'utilities',
             'images'
         ]

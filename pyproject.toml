@@ -15,6 +15,7 @@ setuptools = "^74.1.2"
 django-jazzmin = "^3.0.0"
 django-cors-headers = "^4.4.0"
 djangorestframework-simplejwt = "^5.3.1"
+django-vnpay = "^0.0.19"
 
 
 [build-system]
