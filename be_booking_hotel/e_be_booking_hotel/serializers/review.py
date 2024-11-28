@@ -6,7 +6,7 @@ from e_be_booking_hotel.serializers import UserSerializer
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    user = UserSerializer(source='user_id', read_only=True)  # Include user information based on user_id
+    user = UserSerializer(source='user_id', read_only=True)
     user_id_id = serializers.IntegerField(write_only=True)
 
     class Meta:

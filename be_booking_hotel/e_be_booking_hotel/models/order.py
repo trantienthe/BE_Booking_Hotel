@@ -1,4 +1,7 @@
+from datetime import timedelta
+
 from django.db import models
+from django.utils import timezone
 
 from e_be_booking_hotel.models import User
 from .voucher import Voucher
@@ -25,5 +28,7 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Đơn hàng {self.id} của {self.full_name} - Trạng thái: {self.status}"
+
+
 
 

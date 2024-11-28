@@ -9,7 +9,7 @@ class Review(models.Model):
     rating = models.DecimalField(max_digits=2, decimal_places=1)
     comment = models.TextField()
     review_date = models.DateField()
-    img = models.ImageField(upload_to='review_images/', blank=True, null=True)
+    img = models.ImageField(upload_to='uploads/%Y/%m/%d/', blank=True, null=True)
 
     def __str__(self):
         return f"Review {self.review_id} for Hotel {self.hotel_id}"

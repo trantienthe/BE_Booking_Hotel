@@ -51,8 +51,20 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
-    'vnpay'
+    # 'vnpay'
 ]
+
+JAZZMIN_SETTINGS = {
+    'site_title': 'Quản trị website Haven Hotel',  # Tiêu đề của trang quản trị
+    'site_header': 'Quản trị website Haven Hotel',  # Tiêu đề trên cùng của trang quản trị
+    'site_url': '/',  # URL của trang chủ quản trị
+    'welcome_sign': 'Xin chào Admin Haven Hotel',  # Lời chào mừng
+    'show_ui_builder': True,  # Hiển thị công cụ xây dựng giao diện
+    'changeform_format': 'vertical',  # Định dạng biểu mẫu thay đổi, chọn 'vertical' cho bố cục dọc
+    'changeform_add': 'Thêm bản ghi mới',  # Văn bản hiển thị khi thêm bản ghi mới
+    'site_brand':'Haven Hotel',
+}
+
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -133,7 +145,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Ho_Chi_Minh'
 
 USE_I18N = True
 

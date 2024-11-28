@@ -1,7 +1,6 @@
 import hashlib
 import hmac
 import json
-import logging
 import random
 import time
 from datetime import datetime
@@ -14,8 +13,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from e_be_booking_hotel.serializers import ZaloPayCreateOrderRequestSerializer
-
-logger = logging.getLogger(__name__)
 
 
 class CreateOrderZaloPayView(APIView):
@@ -42,19 +39,11 @@ class CreateOrderZaloPayView(APIView):
             "amount": total_price,
             "description": "Thanh Toán ZaloPay: ",
             "bank_code": "CC",
-            "callback_url": 'https://6726-14-165-105-121.ngrok-free.app/zalopay-callback/',
+            "callback_url": 'https://157d-14-165-105-141.ngrok-free.app/zalopay-callback/',
         }
-
-        # Log payload
-        logger.info(f"ZaloPay Request Payload: {json.dumps(order, indent=4)}")
 
         mac_data = f"{order['app_id']}|{order['app_trans_id']}|{order['app_user']}|{order['amount']}|{order['app_time']}|{order['embed_data']}|{order['item']}"
         order["mac"] = hmac.new(key1.encode(), mac_data.encode(), hashlib.sha256).hexdigest()
-
-        # Log MAC
-        logger.info(f"MAC Data Before Hashing: {mac_data}")
-        logger.info(f"Generated MAC: {order['mac']}")
-
 
         try:
             response = requests.post(endpoint, json=order)
@@ -62,18 +51,12 @@ class CreateOrderZaloPayView(APIView):
             response_data = response.json()
 
             if response_data.get('return_code') != 1:
-                logger.error(
-                    f"ZaloPay error: Full Response: {json.dumps(response_data, indent=4)}"
-                )
                 return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
             return Response(response_data)
 
         except requests.exceptions.RequestException as e:
-            logger.error(f"Request Exception: {str(e)}")
             return Response(
                 {"error": "Failed to connect to ZaloPay.", "details": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-
-

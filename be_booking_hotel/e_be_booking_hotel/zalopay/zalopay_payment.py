@@ -54,7 +54,7 @@ class CheckoutZaloPayView(APIView):
             "amount": total_price,  # Sử dụng total_price từ yêu cầu
             "description": "Thanh Toán ZaloPay: ",
             "bank_code": "CC",  # Mã ngân hàng (thẻ tín dụng)
-            "callback_url": 'https://6726-14-165-105-121.ngrok-free.app/zalopay-callback/',  # URL gọi lại sau khi thanh toán
+            "callback_url": 'https://157d-14-165-105-141.ngrok-free.app/zalopay-callback/',  # URL gọi lại sau khi thanh toán
         }
 
         # Tính toán MAC (Mã xác thực thông điệp) cho đơn hàng

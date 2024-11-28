@@ -11,7 +11,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['id', 'user', 'full_name', 'email', 'phone_number', 'payment_method', 'total_price', 'order_details', 'promo_code', 'voucher', 'status']
+        fields = ['id', 'user', 'full_name', 'email', 'phone_number', 'payment_method', 'total_price', 'order_details', 'promo_code', 'voucher', 'status' , 'order_date']
 
     # Override phương thức create để xử lý việc tạo đơn hàng và các chi tiết đơn hàng
     def create(self, validated_data):
