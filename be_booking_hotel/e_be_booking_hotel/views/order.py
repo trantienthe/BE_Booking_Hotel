@@ -14,3 +14,12 @@ class OrderViewSet(viewsets.ModelViewSet):
             self.perform_create(serializer)  # Lưu dữ liệu
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            # Lấy đối tượng Order
+            order = self.get_object()  # Đây sẽ lấy order với ID từ URL
+            order.delete()  # Xóa đơn hàng
+            return Response(status=status.HTTP_204_NO_CONTENT)  # Trả về 204 No Content khi xóa thành công
+        except Order.DoesNotExist:
+            return Response({"detail": "Order not found"}, status=status.HTTP_404_NOT_FOUND)  # Trả về lỗi nếu không tìm thấy đơn hàng

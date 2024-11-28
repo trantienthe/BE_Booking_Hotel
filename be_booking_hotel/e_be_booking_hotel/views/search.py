@@ -44,7 +44,7 @@ class SearchViewSet(viewsets.ViewSet):
         if price:
             try:
                 price = float(price)  # Chuyển đổi giá trị sang float
-                queryset = queryset.filter(price_per_night__lte=price)  # Tìm kiếm phòng có giá nhỏ hơn hoặc bằng
+                queryset = queryset.filter(price_per_night__lte=price)
             except ValueError:
                 return Response({"error": "Invalid price value"}, status=status.HTTP_400_BAD_REQUEST)
 
