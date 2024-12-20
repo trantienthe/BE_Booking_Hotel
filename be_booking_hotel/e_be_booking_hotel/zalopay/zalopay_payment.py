@@ -15,7 +15,6 @@ from rest_framework.views import APIView
 from e_be_booking_hotel.serializers import ZaloPayCreateOrderRequestSerializer
 from e_be_booking_hotel.models import Order, Cart, Voucher, OrderDetail, User
 
-
 class CheckoutZaloPayView(APIView):
     @swagger_auto_schema(
         request_body=ZaloPayCreateOrderRequestSerializer,
@@ -54,18 +53,14 @@ class CheckoutZaloPayView(APIView):
             "amount": total_price,  # Sử dụng total_price từ yêu cầu
             "description": "Thanh Toán ZaloPay: ",
             "bank_code": "CC",  # Mã ngân hàng (thẻ tín dụng)
-            "callback_url": 'https://157d-14-165-105-141.ngrok-free.app/zalopay-callback/',  # URL gọi lại sau khi thanh toán
+            "callback_url": 'https://aef3-183-80-65-28.ngrok-free.app/zalopay-callback/',  # URL gọi lại sau khi thanh toán
         }
-
-        # Tính toán MAC (Mã xác thực thông điệp) cho đơn hàng
-        mac_data = f"{order['app_id']}|{order['app_trans_id']}|{order['app_user']}|{order['amount']}|{order['app_time']}|{order['embed_data']}|{order['item']}"
-        order["mac"] = hmac.new(key1.encode(), mac_data.encode(), hashlib.sha256).hexdigest()
 
         try:
             user_id = request.data.get('user')  # Lấy user_id từ dữ liệu yêu cầu
             user = User.objects.get(id=user_id)  # Lấy đối tượng User từ cơ sở dữ liệu
 
-            # Tạo đối tượng Order (Đơn hàng)
+            # Tạo đơn hàng
             order_obj = Order.objects.create(
                 user=user,
                 full_name=request.data.get('full_name'),
@@ -73,7 +68,7 @@ class CheckoutZaloPayView(APIView):
                 phone_number=request.data.get('phone_number'),
                 total_price=total_price,  # Sử dụng total_price từ yêu cầu
                 payment_method="zalopay",  # Phương thức thanh toán
-                status="success",  # Trạng thái đơn hàng
+                status="pending",  # Trạng thái đơn hàng
                 voucher=voucher,  # Voucher nếu có (dựa trên mã giảm giá)
             )
 
@@ -100,6 +95,10 @@ class CheckoutZaloPayView(APIView):
             Cart.objects.filter(user=user).delete()
 
             # Gửi yêu cầu tới API ZaloPay
+            order['app_user'] = f'{order_obj.id}'
+            # Tính toán MAC (Mã xác thực thông điệp) cho đơn hàng
+            mac_data = f"{order['app_id']}|{order['app_trans_id']}|{order['app_user']}|{order['amount']}|{order['app_time']}|{order['embed_data']}|{order['item']}"
+            order["mac"] = hmac.new(key1.encode(), mac_data.encode(), hashlib.sha256).hexdigest()
             response = requests.post(endpoint, json=order)
             response.raise_for_status()
             response_data = response.json()

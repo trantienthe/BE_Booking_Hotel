@@ -26,3 +26,5 @@ class ReviewSerializer(serializers.ModelSerializer):
             raise ValidationError("Bạn phải đặt phòng với khách sạn này để gửi đánh giá.")
 
         return attrs
+
+
