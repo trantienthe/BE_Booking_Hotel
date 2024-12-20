@@ -9,10 +9,8 @@ from .voucher import Voucher
 
 class Order(models.Model):
     PAYMENT_METHODS = [
-        ('atm', 'ATM'),
         ('Tiền mặt', 'Tiền mặt'),
         ('postpaid', 'Trả sau'),
-        ('vnpay', 'VNPAY'),
         ('zalopay', 'ZALOPAY'),
     ]
 

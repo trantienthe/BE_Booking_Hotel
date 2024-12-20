@@ -17,9 +17,10 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         try:
-            # Lấy đối tượng Order
-            order = self.get_object()  # Đây sẽ lấy order với ID từ URL
+            order = self.get_object()  # Lấy đối tượng Order
+            print(f"Attempting to delete order with ID: {order.id}")  # Debug log
             order.delete()  # Xóa đơn hàng
-            return Response(status=status.HTTP_204_NO_CONTENT)  # Trả về 204 No Content khi xóa thành công
+            return Response(status=status.HTTP_200_OK)
         except Order.DoesNotExist:
-            return Response({"detail": "Order not found"}, status=status.HTTP_404_NOT_FOUND)  # Trả về lỗi nếu không tìm thấy đơn hàng
+            print("Order does not exist")  # Debug log
+            return Response({"detail": "Order not found"}, status=status.HTTP_404_NOT_FOUND)

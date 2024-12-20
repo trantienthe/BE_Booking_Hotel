@@ -39,7 +39,7 @@ class CreateOrderZaloPayView(APIView):
             "amount": total_price,
             "description": "Thanh Toán ZaloPay: ",
             "bank_code": "CC",
-            "callback_url": 'https://157d-14-165-105-141.ngrok-free.app/zalopay-callback/',
+            "callback_url": 'https://aef3-183-80-65-28.ngrok-free.app/zalopay-callback/',
         }
 
         mac_data = f"{order['app_id']}|{order['app_trans_id']}|{order['app_user']}|{order['amount']}|{order['app_time']}|{order['embed_data']}|{order['item']}"
